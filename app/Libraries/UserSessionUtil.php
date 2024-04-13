@@ -13,6 +13,9 @@ class UserSessionUtil
 
     public function setLoggedIn(string $userId, string $username)
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         if (session_status() === PHP_SESSION_ACTIVE) {
             $_SESSION['userid'] = $userId;
             $_SESSION['username'] = $username;
