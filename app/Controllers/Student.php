@@ -6,22 +6,25 @@ use App\Controllers\BaseController;
 
 class Student extends BaseController
 {
-	public function __construct()
-	{
-		$this->courseStdM = new \App\Models\Coursestudent();
-		$this->courseM = new \App\Models\Course();
-	}
-	public function index()
-	{
-		$this->userL->autoLogout();
-		$this->userL->autoRedirectRank('student');
-		$count = $this->courseM->countAllCourse();
-		$this->template->student('student/index', ['count' => $count]);
-	}
-	public function courses()
-	{
-		$this->userL->autoLogout();
-		$courses = $this->courseM->getAllCourse();
-		$this->template->student('student/courses', ['courses' => $courses]);
-	}
+    protected $courseStudentModel;
+    protected $courseModel;
+
+    public function __construct()
+    {
+        $this->courseStudentModel = new \App\Models\Coursestudent();
+        $this->courseModel = new \App\Models\Course();
+    }
+    public function index()
+    {
+        $this->userUtil->autoLogout();
+        $this->userUtil->autoRedirectRank('student');
+        $count = $this->courseModel->count();
+        $this->template->student('student/index', ['count' => $count]);
+    }
+    public function courses()
+    {
+        $this->userUtil->autoLogout();
+        $courses = $this->courseModel->getAll();
+        $this->template->student('student/courses', ['courses' => $courses]);
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-class URL
+class UrlUtil
 {
     public function head($location)
     {

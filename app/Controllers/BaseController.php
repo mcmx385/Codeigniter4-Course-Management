@@ -20,35 +20,41 @@ use Psr\Log\LoggerInterface;
 
 class BaseController extends Controller
 {
-	/**
-	 * An array of helpers to be loaded automatically upon
-	 * class instantiation. These helpers will be available
-	 * to all other controllers that extend BaseController.
-	 *
-	 * @var array
-	 */
-	protected $helpers = [];
+    /**
+     * An array of helpers to be loaded automatically upon
+     * class instantiation. These helpers will be available
+     * to all other controllers that extend BaseController.
+     *
+     * @var array
+     */
+    protected $helpers = [];
+    protected $session;
+    protected $template;
+    protected $userModel;
+    protected $userUtil;
+    protected $urlUtil;
+    protected $db;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
-	 * @param LoggerInterface   $logger
-	 */
-	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-	{
-		// Do Not Edit This Line
-		parent::initController($request, $response, $logger);
+    /**
+     * Constructor.
+     *
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     * @param LoggerInterface   $logger
+     */
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
 
-		//--------------------------------------------------------------------
-		// Preload any models, libraries, etc, here.
-		//--------------------------------------------------------------------
-		$this->session = \Config\Services::session();
-		$this->template = new \App\Controllers\Template();
-		$this->userM = new \App\Models\User();
-		$this->userL = new \App\Libraries\Users();
-		$this->urlL = new \App\Libraries\URL();
-		$this->db = \Config\Database::connect();
-	}
+        //--------------------------------------------------------------------
+        // Preload any models, libraries, etc, here.
+        //--------------------------------------------------------------------
+        $this->session = \Config\Services::session();
+        $this->template = new \App\Controllers\Template();
+        $this->userModel = new \App\Models\User();
+        $this->userUtil = new \App\Libraries\UserUtil();
+        $this->urlUtil = new \App\Libraries\UrlUtil();
+        $this->db = \Config\Database::connect();
+    }
 }

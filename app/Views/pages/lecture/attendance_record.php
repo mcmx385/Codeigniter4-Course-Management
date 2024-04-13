@@ -12,16 +12,21 @@
         <tbody>
             <?php
             foreach ($data['records'] as $record) {
-            ?>
+                ?>
                 <tr>
                     <td><?php echo $record->lecture_id; ?></td>
                     <td><?php echo $record->date; ?></td>
                     <td><?php echo $record->start_time; ?></td>
                     <td><?php echo $record->end_time; ?></td>
                     <td><?php echo $record->attendance_id ? 'present' : 'absent'; ?></td>
-                    <td><a href="/lecture/takeAttendance/1/<?php echo $record->lecture_id; ?>" class="<?php echo $record->attendance_id ? 'text-muted' : ''; ?>"><?php echo $_SERVER['SERVER_NAME']; ?>/lecture/takeAttendance/1/<?php echo $record->lecture_id; ?></a></td>
+                    <td>
+                        <a href="/lecture/takeAttendance/1/<?php echo $record->lecture_id; ?>"
+                            class="<?php echo $record->attendance_id ? 'text-muted' : ''; ?>">
+                            <?php echo isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : ""; ?>/lecture/takeAttendance/1/<?php echo $record->lecture_id; ?>
+                        </a>
+                    </td>
                 </tr>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>

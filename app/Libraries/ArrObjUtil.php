@@ -2,12 +2,12 @@
 
 namespace App\Libraries;
 
-class ArrObj
+class ArrObjUtil
 {
     public function arrCol($arr, $col)
     {
         $list = [];
-        foreach ($arr as $item) :
+        foreach ($arr as $item):
             $item = (array) $item;
             array_push($list, $item[$col]);
         endforeach;

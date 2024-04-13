@@ -11,15 +11,16 @@
         <tbody>
             <?php
             foreach ($data['courses'] as $course) {
-            ?>
+                ?>
                 <tr>
                     <td><?php echo $course->course_id; ?></td>
                     <td><?php echo $course->code; ?></td>
                     <td><?php echo $course->name; ?></td>
                     <td><?php echo $course->teacher_name; ?></td>
-                    <td><a class="btn btn-success" href="/lecture/attendance_record/<?php echo $course->course_id; ?>">View</a></td>
+                    <td><a class="btn btn-success"
+                            href="/lecture/attendance_record/<?php echo $course->course_id; ?>">View</a></td>
                 </tr>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>

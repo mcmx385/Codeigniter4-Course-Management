@@ -15,7 +15,7 @@
 
 
                     <div class="col-12 py-2 text-center">
-                        <?php echo $_GET["status"] ? $_GET["status"] : ''; ?>
+                        <?php echo isset($_GET["status"]) && $_GET["status"] ? $_GET["status"] : ''; ?>
                     </div>
 
                     <!-- Username -->
@@ -25,8 +25,10 @@
                                 <i class="fa fa-tags text-muted"></i>
                             </span>
                         </div>
-                        <input id="lastName" type="text" name="username" placeholder="username / email / phone" class="form-control bg-white border-left-0 border-md" required <?php if ($_GET['status'] == "attempts used up") : echo "disabled";
-                                                                                                                                                                                endif; ?>>
+                        <input id="lastName" type="text" name="username" placeholder="username / email / phone"
+                            class="form-control bg-white border-left-0 border-md" required <?php if (isset($_GET['status']) && $_GET['status'] == "attempts used up"):
+                                echo "disabled";
+                            endif; ?>>
                     </div>
 
                     <!-- Password -->
@@ -36,7 +38,8 @@
                                 <i class="fa fa-lock text-muted"></i>
                             </span>
                         </div>
-                        <input id="password" type="password" name="password" placeholder="password" class="form-control bg-white border-left-0 border-md" required <?php echo $_GET['status'] == "attempts used up" ?  "disabled" : ''; ?>>
+                        <input id="password" type="password" name="password" placeholder="password"
+                            class="form-control bg-white border-left-0 border-md" required <?php echo isset($_GET['status']) && $_GET['status'] == "attempts used up" ? "disabled" : ''; ?>>
                     </div>
 
                     <!--<div class="form-group col-6 mx-auto mb-4">
@@ -48,7 +51,8 @@
 
                     <!-- Submit Button -->
                     <div class="form-group col-lg-12 mx-auto mb-0">
-                        <input type="hidden" name="target" value="<?php echo $_GET["target"] ? $_GET["target"] : $_SERVER["HTTP_REFERER"]; ?>">
+                        <input type="hidden" name="target"
+                            value="<?php echo isset($_GET["target"]) ? $_GET["target"] : isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : ""; ?>">
                         <input type="submit" class="btn btn-danger btn-block py-2" value="Login">
                     </div>
 

@@ -1,5 +1,7 @@
 <div class="row py-2">
-    <div class="col-3"><?php echo view('components/return_button', ['link' => $link]); ?></div>
+    <div class="col-3">
+        <?php echo view('components/return_button', ['link' => isset($link) ? $link : "#"]); ?>
+    </div>
     <div class="col-6">
         <h2 class="text-center"><?php echo $title; ?></h2>
     </div>

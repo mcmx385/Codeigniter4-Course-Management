@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Course extends Model
+class CourseLecture extends Model
 {
     protected $DBGroup = 'default';
-    protected $table = 'courses';
+    protected $table = 'course_lecture';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $insertID = 0;
     protected $returnType = 'object';
     protected $useSoftDelete = false;
-    protected $protectFields = true;
+    protected $protectFields = false;
     protected $allowedFields = [];
 
     // Dates
@@ -40,20 +40,12 @@ class Course extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function getByTeacherId($teacher_id)
+    public function findByCourseId($course_id)
     {
-        return $this->where('teacher_id', $teacher_id)->findAll();
+        return $this->where('course_id', $course_id)->findAll();
     }
-    public function countByTeacherId($teacher_id)
+    public function findByLectureId($lecture_id)
     {
-        return count($this->getByTeacherId($teacher_id));
-    }
-    public function getAll()
-    {
-        return $this->select('courses.course_id, courses.code, courses.name as name, users.name as teacher_name')->join('users', 'users.id=courses.teacher_id', 'left')->findAll();
-    }
-    public function count()
-    {
-        return count($this->getAll());
+        return $this->where('lecture_id', $lecture_id)->first();
     }
 }

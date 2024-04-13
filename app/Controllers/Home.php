@@ -8,8 +8,8 @@ class Home extends BaseController
     {
         $this->template = new \App\Controllers\Template();
     }
-	public function index()
-	{
-		$this->template->user('home/index');
-	}
+    public function index()
+    {
+        $this->template->user('home/index');
+    }
 }

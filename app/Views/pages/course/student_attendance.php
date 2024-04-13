@@ -11,7 +11,7 @@
         <tbody>
             <?php
             foreach ($data['student_records'] as $record) {
-            ?>
+                ?>
                 <tr>
                     <td><?php echo $record->lecture_id; ?></td>
                     <td><?php echo $record->date; ?></td>
@@ -19,7 +19,7 @@
                     <td><?php echo $record->end_time; ?></td>
                     <td><?php echo $record->attendance_id ? 'present' : 'absent'; ?></td>
                 </tr>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>

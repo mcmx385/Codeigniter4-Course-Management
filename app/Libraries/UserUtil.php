@@ -2,11 +2,12 @@
 
 namespace App\Libraries;
 
-class Users
+class UserUtil
 {
+    protected $userModel = null;
     public function __construct()
     {
-        $this->userM = new \App\Models\User();
+        $this->userModel = new \App\Models\User();
     }
     public function autoLogin()
     {
@@ -14,7 +15,10 @@ class Users
             $user_rank = $this->getUserRank();
             $this->redirectRank($user_rank);
         }
-        return $_SESSION['userid'];
+        if (isset($_SESSION['userid'])) {
+            return $_SESSION['userid'];
+        }
+        return null;
     }
     public function autoLogout()
     {
@@ -22,7 +26,10 @@ class Users
             header('location: /user/login');
             exit;
         }
-        return $_SESSION['userid'];
+        if (isset($_SESSION['userid'])) {
+            return $_SESSION['userid'];
+        }
+        return null;
     }
     public function logout($session)
     {
@@ -50,7 +57,7 @@ class Users
     }
     public function getUserRank()
     {
-        return $this->userM->getUserRank($_SESSION['userid']);
+        return $this->userModel->findRankByUserId($_SESSION['userid']);
     }
     public function autoRedirectRank($target_rank)
     {

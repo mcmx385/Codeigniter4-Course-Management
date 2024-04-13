@@ -29,15 +29,19 @@
         <tbody>
             <?php
             foreach ($data['lectures'] as $lecture) {
-            ?>
+                ?>
                 <tr>
                     <td><?php echo $lecture->course_id; ?></td>
                     <td><?php echo $lecture->date; ?></td>
                     <td><?php echo $lecture->start_time; ?></td>
                     <td><?php echo $lecture->end_time; ?></td>
-                    <td><a href="/lecture/takeAttendance/1/<?php echo $lecture->lecture_id; ?>"><?php echo $_SERVER['SERVER_NAME']; ?>/lecture/takeAttendance/1/<?php echo $lecture->lecture_id; ?></a></td>
+                    <td>
+                        <a href="/lecture/takeAttendance/1/<?php echo $lecture->lecture_id; ?>">
+                            <?php echo isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : ""; ?>/lecture/takeAttendance/1/<?php echo $lecture->lecture_id; ?>
+                        </a>
+                    </td>
                 </tr>
-            <?php
+                <?php
             }
             ?>
         </tbody>

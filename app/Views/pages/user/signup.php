@@ -18,7 +18,8 @@
                                     <i class="fa fa-user text-muted"></i>
                                 </span>
                             </div>
-                            <input id="firstName" type="text" name="full_name" placeholder="Full name *" class="form-control bg-white border-left-0 border-md" value="Administrator" required>
+                            <input id="firstName" type="text" name="full_name" placeholder="Full name *"
+                                class="form-control bg-white border-left-0 border-md" value="Administrator" required>
                         </div>
 
                         <!-- Username -->
@@ -28,7 +29,8 @@
                                     <i class="fa fa-tags text-muted"></i>
                                 </span>
                             </div>
-                            <input id="username" type="text" name="username" placeholder="Username *" class="form-control bg-white border-left-0 border-md" value="admin" required>
+                            <input id="username" type="text" name="username" placeholder="Username *"
+                                class="form-control bg-white border-left-0 border-md" value="admin" required>
                             <span id="usernameError" class="w-100 text-danger"></span>
                         </div>
 
@@ -39,7 +41,8 @@
                                     <i class="fa fa-envelope text-muted"></i>
                                 </span>
                             </div>
-                            <input id="email" type="email" name="email" placeholder="Email address *" class="form-control bg-white border-left-0 border-md" value="admin@admin.com" required>
+                            <input id="email" type="email" name="email" placeholder="Email address *"
+                                class="form-control bg-white border-left-0 border-md" value="admin@admin.com" required>
                             <span id="emailError" class="w-100 text-danger"></span>
                         </div>
                     </div>
@@ -53,10 +56,12 @@
                                     <i class="fa fa-phone-square text-muted"></i>
                                 </span>
                             </div>
-                            <select id="countryCode" name="country" style="max-width: 80px" class="custom-select form-control bg-white border-left-0 border-md h-100">
+                            <select id="countryCode" name="country" style="max-width: 80px"
+                                class="custom-select form-control bg-white border-left-0 border-md h-100">
                                 <option value="">+852</option>
                             </select>
-                            <input id="phone" type="tel" name="phone" placeholder="Phone number *" class="form-control bg-white border-md border-left-0 pl-3" value="12345678" required>
+                            <input id="phone" type="tel" name="phone" placeholder="Phone number *"
+                                class="form-control bg-white border-md border-left-0 pl-3" value="12345678" required>
                             <span id="phoneError" class="w-100 text-danger"></span>
                         </div>
 
@@ -67,9 +72,12 @@
                                     <i class="fa fa-lock text-muted"></i>
                                 </span>
                             </div>
-                            <input id="password" type="password" name="password" placeholder="Password * (至少一大小字母和數字)" class="form-control bg-white border-left-0 border-md password_field" value="adminadmin" required>
+                            <input id="password" type="password" name="password" placeholder="Password * (至少一大小字母和數字)"
+                                class="form-control bg-white border-left-0 border-md password_field" value="adminadmin"
+                                required>
                             <div class="input-group-append">
-                                <span class="input-group-text password_reveal" id="basic-addon2"><i class="fa fa-eye-slash password_icon" aria-hidden="true"></i></span>
+                                <span class="input-group-text password_reveal" id="basic-addon2"><i
+                                        class="fa fa-eye-slash password_icon" aria-hidden="true"></i></span>
                             </div>
                             <span id="passwordError" class="w-100 text-danger"></span>
                         </div>
@@ -81,9 +89,13 @@
                                     <i class="fa fa-lock text-muted"></i>
                                 </span>
                             </div>
-                            <input id="passwordConfirmation" type="password" name="passwordConfirmation" placeholder="Confirm password * (至少一大小字母和數字)" class="form-control bg-white border-left-0 border-md password_field" value="adminadmin1" required>
+                            <input id="passwordConfirmation" type="password" name="passwordConfirmation"
+                                placeholder="Confirm password * (至少一大小字母和數字)"
+                                class="form-control bg-white border-left-0 border-md password_field" value="adminadmin1"
+                                required>
                             <div class="input-group-append">
-                                <span class="input-group-text password_reveal" id="basic-addon2"><i class="fa fa-eye-slash password_icon" aria-hidden="true"></i></span>
+                                <span class="input-group-text password_reveal" id="basic-addon2"><i
+                                        class="fa fa-eye-slash password_icon" aria-hidden="true"></i></span>
                             </div>
                             <span id="passwordConfirmationError" class="w-100 text-danger"></span>
                         </div>
@@ -91,8 +103,11 @@
                     <div class="col-12">
                         <div class="input-group mb-4">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked required>
-                                <label class="form-check-label" for="inlineCheckbox1">I have read the <a href="#" data-toggle="modal" data-target="#staticBackdrop">terms and conditions</a> and agreed to them when submitting the register form.</label>
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"
+                                    checked required>
+                                <label class="form-check-label" for="inlineCheckbox1">I have read the <a href="#"
+                                        data-toggle="modal" data-target="#staticBackdrop">terms and conditions</a> and
+                                    agreed to them when submitting the register form.</label>
                             </div>
                         </div>
 
@@ -102,12 +117,14 @@
 
                         <!-- Submit Button -->
                         <div class="form-group mx-auto mb-0">
-                            <button class="btn btn-primary btn-block" type="submit" class="btnRegister" name="action">Signup</button>
+                            <button class="btn btn-primary btn-block" type="submit" class="btnRegister"
+                                name="action">Signup</button>
                         </div>
 
                         <!-- Already Registered -->
                         <div class="text-center w-100 mt-3">
-                            <p class="text-muted">Already have an account?<a href="/user/login" class="text-primary ml-2">Login</a></p>
+                            <p class="text-muted">Already have an account?<a href="/user/login"
+                                    class="text-primary ml-2">Login</a></p>
                         </div>
                     </div>
             </form>
@@ -153,7 +170,7 @@
     }
 
     const getChecked = (name) => {
-        return $('input[data-id^=' + name + ']:checked').map(function(id, el) {
+        return $('input[data-id^=' + name + ']:checked').map(function (id, el) {
             return $(el).val();
         }).get();
     }
@@ -166,7 +183,7 @@
             method: 'post',
             async: false,
             data: {},
-            success: function(data) {
+            success: function (data) {
                 return data
             }
         });

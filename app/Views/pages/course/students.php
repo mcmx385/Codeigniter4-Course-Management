@@ -9,13 +9,14 @@
         <tbody>
             <?php
             foreach ($data['students'] as $student) {
-            ?>
+                ?>
                 <tr>
                     <td><?php echo $student->id; ?></td>
                     <td><?php echo $student->name; ?></td>
-                    <td><a href="/course/student_attendance/<?php echo $data['course_id']; ?>/<?php echo $student->id; ?>" class="btn btn-success"> View</a></td>
+                    <td><a href="/course/student_attendance/<?php echo $data['course_id']; ?>/<?php echo $student->id; ?>"
+                            class="btn btn-success"> View</a></td>
                 </tr>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>

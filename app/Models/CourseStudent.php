@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Course extends Model
+class Coursestudent extends Model
 {
     protected $DBGroup = 'default';
-    protected $table = 'courses';
+    protected $table = 'course_student';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $insertID = 0;
@@ -40,20 +40,28 @@ class Course extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function getByTeacherId($teacher_id)
+    public function findByCourseId($course_id)
     {
-        return $this->where('teacher_id', $teacher_id)->findAll();
+        return $this->select('student_id')->where('course_id', $course_id)->findAll();
     }
-    public function countByTeacherId($teacher_id)
+    public function findByStudentId($student_id)
     {
-        return count($this->getByTeacherId($teacher_id));
+        return $this->select('courses.course_id, courses.name, courses.code, users.name as teacher_name')
+            ->where('student_id', $student_id)
+            ->join('courses', 'course_student.course_id=courses.course_id', 'left')
+            ->join('users', 'users.id=courses.teacher_id', 'left')
+            ->get()->getResult();
     }
-    public function getAll()
+    public function findByCourseIdWithUserInfo($course_id)
     {
-        return $this->select('courses.course_id, courses.code, courses.name as name, users.name as teacher_name')->join('users', 'users.id=courses.teacher_id', 'left')->findAll();
+        return $this->db->table('course_student')
+            ->select('users.id as student_id, name')
+            ->where('course_student.course_id', $course_id)
+            ->join('users', 'users.id=course_student.student_id', 'left')
+            ->get()->getResult();
     }
-    public function count()
+    public function countByStudentId($student_id)
     {
-        return count($this->getAll());
+        return count($this->findByStudentId($student_id));
     }
 }

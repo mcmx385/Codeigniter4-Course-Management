@@ -4,13 +4,9 @@ namespace App\Controllers;
 
 class User extends BaseController
 {
-    public function __construct()
-    {
-        $this->userL = new \App\Libraries\Users();
-    }
     public function login()
     {
-        $this->userL->autoLogin();
+        $this->userUtil->autoLogin();
         $this->template->user('user/login');
     }
     public function signup()
@@ -31,20 +27,20 @@ class User extends BaseController
     }
     public function index()
     {
-        $this->userL->autoLogout();
+        $this->userUtil->autoLogout();
         $this->template->user('user/index');
     }
     public function auth()
     {
-        $this->userL->autoLogin();
-        $user = $this->userM->ifUserValid($_POST['username'], $_POST['password']);
+        $this->userUtil->autoLogin();
+        $user = $this->userModel->existUsernameAndPassword($_POST['username'], $_POST['password']);
         if ($user) {
             echo "User valid";
             $_SESSION['userid'] = $user->id;
             $_SESSION['username'] = $user->name;
             $_SESSION['loggedin'] = true;
-            $user_rank = $this->userM->getUserRank($user->id);
-            $this->userL->redirectRank($user_rank);
+            $user_rank = $this->userModel->findRankByUserId($user->id);
+            $this->userUtil->redirectRank($user_rank);
         } else {
             echo "User invalid";
             header('location: /user/login?status=' . urlencode('username or password invalid'));
@@ -53,6 +49,6 @@ class User extends BaseController
     }
     public function logout()
     {
-        $this->userL->logout($this->session);
+        $this->userUtil->logout($this->session);
     }
 }
