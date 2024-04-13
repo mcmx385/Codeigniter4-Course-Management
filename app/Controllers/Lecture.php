@@ -18,8 +18,8 @@ class Lecture extends BaseController
     }
     public function attendance($course_id = null, $lecture_id = null)
     {
-        $this->userUtil->autoLogout();
-        $this->userUtil->autoRedirectRank('teacher');
+        $this->userSessionUtil->autoLogout();
+        $this->userSessionUtil->autoRedirectRank('teacher');
         $lectures = $this->courseLectureModel->findByCourseId($course_id);
         $students = [];
         if ($lecture_id !== null) {
@@ -33,8 +33,8 @@ class Lecture extends BaseController
     }
     public function urls($course_id = null)
     {
-        $this->userUtil->autoLogout();
-        $this->userUtil->autoRedirectRank('teacher');
+        $this->userSessionUtil->autoLogout();
+        $this->userSessionUtil->autoRedirectRank('teacher');
         $lectures = $this->courseLectureModel->findByCourseId($course_id);
         $this->template->teacher('lecture/urls', ['lectures' => $lectures, 'course_id' => $course_id]);
     }
@@ -71,17 +71,17 @@ class Lecture extends BaseController
                     $status = 'already taken';
                 }
                 if ($enter) {
-                    $this->urlUtil->head('/lecture/details/' . $lecture_id);
+                    $this->urlUtil->goToUrl('/lecture/details/' . $lecture_id);
                 }
             } else {
                 $status = 'not between lecture time';
             }
         }
-        $this->urlUtil->head(strtok($_SERVER['HTTP_REFERER'], '?') . '?status=' . urlencode($status));
+        $this->urlUtil->goToUrl(strtok($_SERVER['HTTP_REFERER'], '?') . '?status=' . urlencode($status));
     }
     public function attendance_record($course_id)
     {
-        $userid = $this->userUtil->autoLogout();
+        $userid = $this->userSessionUtil->autoLogout();
         $records = $this->db->table('course_lecture')
             ->select('course_lecture.lecture_id, attendance_id, date, start_time, end_time')
             ->where('course_id', $course_id)

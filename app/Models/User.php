@@ -40,21 +40,20 @@ class User extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function existUsernameAndPassword($username, $password)
+    public function findByUsernameAndPassword(string $username, string $password): ?object
     {
-        $user = $this->where('name', $username)->where('password', $password)->findAll();
-        return (count($user) == 1) ? $user[0] : false;
+        return $this->where('name', $username)->where('password', $password)->first();
     }
-    public function findRankByUserId($userid)
+    public function findRankByUserId(int $userid): string
     {
         $user = $this->where('id', $userid)->first();
         return $user->rank;
     }
-    public function findInfoByUserIds($list)
+    public function findInfoByUserIds($list): array
     {
         return $this->select('id, name')->whereIn('id', $list)->findAll();
     }
-    public function findByRank($rank)
+    public function findByRank(string $rank): array
     {
         return $this->select('id, name')->where('rank', $rank)->findAll();
     }

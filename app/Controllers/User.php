@@ -2,15 +2,18 @@
 
 namespace App\Controllers;
 
+define('CREDENTIALS_REQUIRED_MESSAGE', 'The field username or password is invalid.');
+
 class User extends BaseController
 {
     public function login()
     {
-        $this->userUtil->autoLogin();
+        $this->pageAccessUtil->autoRedirectToLoggedInPage();
         $this->template->user('user/login');
     }
     public function signup()
     {
+        $this->pageAccessUtil->autoRedirectToLoggedInPage();
         $this->template->user('user/signup');
     }
     public function forgot_password()
@@ -27,28 +30,32 @@ class User extends BaseController
     }
     public function index()
     {
-        $this->userUtil->autoLogout();
+        $this->pageAccessUtil->validateOrRedirectLoggedIn();
         $this->template->user('user/index');
     }
+
     public function auth()
     {
-        $this->userUtil->autoLogin();
-        $user = $this->userModel->existUsernameAndPassword($_POST['username'], $_POST['password']);
-        if ($user) {
-            echo "User valid";
-            $_SESSION['userid'] = $user->id;
-            $_SESSION['username'] = $user->name;
-            $_SESSION['loggedin'] = true;
-            $user_rank = $this->userModel->findRankByUserId($user->id);
-            $this->userUtil->redirectRank($user_rank);
-        } else {
-            echo "User invalid";
-            header('location: /user/login?status=' . urlencode('username or password invalid'));
-            exit;
+        try {
+            $this->pageAccessUtil->autoRedirectToLoggedInPage();
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            if (!isset($username) || !isset($password)) {
+                throw new \Exception(CREDENTIALS_REQUIRED_MESSAGE);
+            }
+            $this->userHelper->login($username, $password);
+        } catch (\Exception $e) {
+            log_message('error', $e->getMessage());
+            $this->pageAccessUtil->goToLoginPageWithStatus($e->getMessage());
         }
     }
     public function logout()
     {
-        $this->userUtil->logout($this->session);
+        try {
+            $this->userHelper->logout();
+        } catch (\Exception $e) {
+            log_message('error', $e->getMessage());
+            $this->pageAccessUtil->goToLoginPageWithStatus($e->getMessage());
+        }
     }
 }

@@ -16,7 +16,7 @@ class Course extends BaseController
     }
     public function students($course_id)
     {
-        $this->userUtil->autoLogout();
+        $this->userSessionUtil->autoLogout();
         $students = $this->userModel->findByRank('student');
         $this->template->teacher('course/students', ['students' => $students, 'course_id' => $course_id]);
     }

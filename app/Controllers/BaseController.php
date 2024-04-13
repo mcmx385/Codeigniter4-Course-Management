@@ -31,9 +31,11 @@ class BaseController extends Controller
     protected $session;
     protected $template;
     protected $userModel;
-    protected $userUtil;
+    protected $userSessionUtil;
+    protected $userHelper;
     protected $urlUtil;
     protected $db;
+    protected $pageAccessUtil;
 
     /**
      * Constructor.
@@ -53,8 +55,11 @@ class BaseController extends Controller
         $this->session = \Config\Services::session();
         $this->template = new \App\Controllers\Template();
         $this->userModel = new \App\Models\User();
-        $this->userUtil = new \App\Libraries\UserUtil();
+        $this->userHelper = new \App\Helpers\UserHelper();
+        $this->userSessionUtil = new \App\Libraries\UserSessionUtil();
         $this->urlUtil = new \App\Libraries\UrlUtil();
+        $this->pageAccessUtil = new \App\Libraries\PageAccessUtil();
+
         $this->db = \Config\Database::connect();
     }
 }

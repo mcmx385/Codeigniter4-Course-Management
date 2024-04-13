@@ -16,14 +16,14 @@ class Student extends BaseController
     }
     public function index()
     {
-        $this->userUtil->autoLogout();
-        $this->userUtil->autoRedirectRank('student');
+        $this->userSessionUtil->autoLogout();
+        $this->userSessionUtil->autoRedirectRank('student');
         $count = $this->courseModel->count();
         $this->template->student('student/index', ['count' => $count]);
     }
     public function courses()
     {
-        $this->userUtil->autoLogout();
+        $this->userSessionUtil->autoLogout();
         $courses = $this->courseModel->getAll();
         $this->template->student('student/courses', ['courses' => $courses]);
     }
