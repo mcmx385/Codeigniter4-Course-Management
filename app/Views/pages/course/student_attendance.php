@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             <?php
-            foreach ($data['student_records'] as $record) {
+            foreach ($data['studentAttendances'] as $record) {
                 ?>
                 <tr>
                     <td><?php echo $record->lecture_id; ?></td>

@@ -27,7 +27,7 @@ class CourseSeeder extends Seeder
         ];
 
         $builder = $this->db->table('courses');
-        $builder->truncate('courses');
+        $builder->truncate();
         $builder->insertBatch($data);
         echo (string) $this->db->getLastQuery();
     }

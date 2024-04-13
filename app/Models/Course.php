@@ -40,19 +40,19 @@ class Course extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function getByTeacherId($teacher_id)
+    public function getByTeacherId($teacherId): array
     {
-        return $this->where('teacher_id', $teacher_id)->findAll();
+        return $this->where('teacher_id', $teacherId)->findAll();
     }
-    public function countByTeacherId($teacher_id)
+    public function countByTeacherId($teacherId): int
     {
-        return count($this->getByTeacherId($teacher_id));
+        return count($this->getByTeacherId($teacherId));
     }
-    public function getAll()
+    public function getAll(): array
     {
         return $this->select('courses.course_id, courses.code, courses.name as name, users.name as teacher_name')->join('users', 'users.id=courses.teacher_id', 'left')->findAll();
     }
-    public function count()
+    public function count(): int
     {
         return count($this->getAll());
     }

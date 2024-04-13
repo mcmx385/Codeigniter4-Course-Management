@@ -20,8 +20,11 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="/user/login">Login</a>
-                        <a class="dropdown-item" href="/user/logout">Logout</a>
+                        <?php if (!$isLoggedIn): ?>
+                            <a class="dropdown-item" href="/user/login">Login</a>
+                        <?php else: ?>
+                            <a class="dropdown-item" href="/user/logout">Logout</a>
+                        <?php endif; ?>
                         <!-- <a class="dropdown-item" href="/user/signup">Signup</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/user/profile">Profile</a>

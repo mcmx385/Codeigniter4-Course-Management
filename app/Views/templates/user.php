@@ -20,7 +20,7 @@
 
 <body>
     <?php echo view('templates/nav/user'); ?>
-    <?php echo view($page); ?>
+    <?php echo view($page, ['isLoggedIn' => $isLoggedIn]); ?>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"

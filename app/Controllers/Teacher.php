@@ -18,16 +18,16 @@ class Teacher extends BaseController
     }
     public function index()
     {
-        $user_id = $this->userSessionUtil->autoLogout();
-        $this->userSessionUtil->autoRedirectRank('teacher');
-        $count = $this->courseModel->countByTeacherId($user_id);
+        $this->pageAccessUtil->validateOrRedirectRank(['teacher', 'admin']);
+        $userId = $this->userSessionUtil->getUserId();
+        $count = $this->courseModel->countByTeacherId($userId);
         $this->template->teacher('teacher/index', ['count' => $count]);
     }
     public function courses()
     {
-        $userid = $this->userSessionUtil->autoLogout();
-        $this->userSessionUtil->autoRedirectRank('teacher');
-        $teacher_courses = $this->courseModel->getByTeacherId($userid);
-        $this->template->teacher('teacher/courses', ['teacher_courses' => $teacher_courses]);
+        $this->pageAccessUtil->validateOrRedirectRank(['teacher', 'admin']);
+        $userId = $this->userSessionUtil->getUserId();
+        $teacherCourses = $this->courseModel->getByTeacherId($userId);
+        $this->template->teacher('teacher/courses', ['teacher_courses' => $teacherCourses]);
     }
 }

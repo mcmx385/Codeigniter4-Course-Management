@@ -40,12 +40,12 @@ class CourseLecture extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function findByCourseId($course_id)
+    public function findByCourseId($courseId)
     {
-        return $this->where('course_id', $course_id)->findAll();
+        return $this->where('course_id', $courseId)->findAll();
     }
-    public function findByLectureId($lecture_id)
+    public function findByLectureId($lectureId)
     {
-        return $this->where('lecture_id', $lecture_id)->first();
+        return $this->where('lecture_id', $lectureId)->first();
     }
 }

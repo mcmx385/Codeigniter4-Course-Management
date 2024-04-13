@@ -29,4 +29,9 @@ class UrlUtil
     {
         $this->goToUrl($this->getPreviousUrl());
     }
+
+    public function goToPreviousUrlWithStatus(string $status)
+    {
+        $this->goToUrlWithStatus($this->getPreviousUrl(), $status);
+    }
 }

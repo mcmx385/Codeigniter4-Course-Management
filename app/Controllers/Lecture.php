@@ -16,62 +16,59 @@ class Lecture extends BaseController
         $this->lectureAttendanceModel = new \App\Models\LectureAttendance();
         $this->courseLectureModel = new \App\Models\CourseLecture();
     }
-    public function attendance($course_id = null, $lecture_id = null)
+    public function attendance($courseId = null, $lectureId = null)
     {
-        $this->userSessionUtil->autoLogout();
-        $this->userSessionUtil->autoRedirectRank('teacher');
-        $lectures = $this->courseLectureModel->findByCourseId($course_id);
+        $this->pageAccessUtil->validateOrRedirectRank(['teacher', 'admin']);
+        $lectures = $this->courseLectureModel->findByCourseId($courseId);
         $students = [];
-        if ($lecture_id !== null) {
+        if ($lectureId !== null) {
             $students = $this->db->table('users')
-                ->select('users.id as userid, name, attendance_id')
+                ->select('users.id as userid, name, attendanceId')
                 ->where('users.rank', 'student')
-                ->join('lecture_attendance', 'lecture_attendance.lecture_id=' . $lecture_id . ' and lecture_attendance.student_id=users.id', 'left')
+                ->join('lecture_attendance', 'lecture_attendance.lectureId=' . $lectureId . ' and lecture_attendance.studentId=users.id', 'left')
                 ->get()->getResult();
         }
-        $this->template->teacher('lecture/attendance', ['lectures' => $lectures, 'course_id' => $course_id, 'lecture_id' => $lecture_id, 'students' => $students]);
+        $this->template->teacher('lecture/attendance', ['lectures' => $lectures, 'courseId' => $courseId, 'lectureId' => $lectureId, 'students' => $students]);
     }
-    public function urls($course_id = null)
+    public function urls($courseId = null)
     {
-        $this->userSessionUtil->autoLogout();
-        $this->userSessionUtil->autoRedirectRank('teacher');
-        $lectures = $this->courseLectureModel->findByCourseId($course_id);
-        $this->template->teacher('lecture/urls', ['lectures' => $lectures, 'course_id' => $course_id]);
+        $this->pageAccessUtil->validateOrRedirectRank(['teacher', 'admin']);
+        $lectures = $this->courseLectureModel->findByCourseId($courseId);
+        $this->template->teacher('lecture/urls', ['lectures' => $lectures, 'courseId' => $courseId]);
     }
-    public function addLecture($course_id)
+    public function add_lecture($courseId)
     {
-        $data = [
-            'course_id' => $course_id,
+        $courseLecture = [
+            'courseId' => $courseId,
             'date' => $_POST['date'],
-            'start_time' => $_POST['start_time'],
-            'end_time' => $_POST['end_time'],
+            'startTime' => $_POST['startTime'],
+            'endTime' => $_POST['endTime'],
         ];
-        $this->courseLectureModel->save($data);
-        header('location: ' . $_SERVER['HTTP_REFERER']);
-        exit;
+        $this->courseLectureModel->save($courseLecture);
+        $this->urlUtil->goToPreviousUrl();
     }
     /*
-       get lecture and student id from url or from session
-       also need check if student is in this course
-       */
-    public function takeAttendance($enter = 0, $lecture_id = null, $student_id = null)
+        get lecture and student id from url or from session
+        also need check if student is in this course
+    */
+    public function take_attendance($enter = 0, $lectureId = null, $studentId = null)
     {
         $status = 'error occured or try login first';
-        if ($student_id == null && session_status() === PHP_SESSION_ACTIVE) {
-            $student_id = $_SESSION['userid'];
+        if ($studentId == null && session_status() === PHP_SESSION_ACTIVE) {
+            $studentId = $_SESSION['userid'];
         }
-        if ($lecture_id !== null && $student_id !== null) {
-            $lecture_info = $this->courseLectureModel->findByLectureId($lecture_id);
+        if ($lectureId !== null && $studentId !== null) {
+            $lecture_info = $this->courseLectureModel->findByLectureId($lectureId);
             $curr_date = date('Y-m-d');
             $curr_time = date('H:i:s');
-            if ($curr_date == $lecture_info->date && strtotime($curr_time) > strtotime($lecture_info->start_time) && strtotime($curr_time) < strtotime($lecture_info->end_time)) {
-                if ($this->lectureAttendanceModel->saveByLectureIdAndStudentId($lecture_id, $student_id)) {
+            if ($curr_date == $lecture_info->date && strtotime($curr_time) > strtotime($lecture_info->startTime) && strtotime($curr_time) < strtotime($lecture_info->endTime)) {
+                if ($this->lectureAttendanceModel->saveByLectureIdAndStudentId($lectureId, $studentId)) {
                     $status = 'attendance taken';
                 } else {
                     $status = 'already taken';
                 }
                 if ($enter) {
-                    $this->urlUtil->goToUrl('/lecture/details/' . $lecture_id);
+                    $this->urlUtil->goToUrl('/lecture/details/' . $lectureId);
                 }
             } else {
                 $status = 'not between lecture time';
@@ -79,19 +76,20 @@ class Lecture extends BaseController
         }
         $this->urlUtil->goToUrl(strtok($_SERVER['HTTP_REFERER'], '?') . '?status=' . urlencode($status));
     }
-    public function attendance_record($course_id)
+    public function attendance_record($courseId)
     {
-        $userid = $this->userSessionUtil->autoLogout();
+        $this->pageAccessUtil->validateOrRedirectLoggedIn();
+        $userId = $this->userSessionUtil->getUserId();
         $records = $this->db->table('course_lecture')
             ->select('course_lecture.lecture_id, attendance_id, date, start_time, end_time')
-            ->where('course_id', $course_id)
-            ->join('lecture_attendance', 'lecture_attendance.lecture_id=course_lecture.lecture_id and lecture_attendance.student_id=' . $userid, 'left')
+            ->where('course_id', $courseId)
+            ->join('lecture_attendance', 'lecture_attendance.lecture_id=course_lecture.lecture_id and lecture_attendance.student_id=' . $userId, 'left')
             ->get()->getResult();
         $this->template->student('lecture/attendance_record', ['records' => $records]);
     }
-    public function details($lecture_id)
+    public function details($lectureId)
     {
-        $lecture = $this->courseLectureModel->findByLectureId($lecture_id);
+        $lecture = $this->courseLectureModel->findByLectureId($lectureId);
         $this->template->student('lecture/details', ['lecture' => $lecture]);
     }
 }

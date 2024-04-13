@@ -267,7 +267,7 @@ class UserSeeder extends Seeder
         ];
 
         $builder = $this->db->table('users');
-        $builder->truncate('users');
+        $builder->truncate();
         $builder->insertBatch($data);
         echo (string) $this->db->getLastQuery();
     }

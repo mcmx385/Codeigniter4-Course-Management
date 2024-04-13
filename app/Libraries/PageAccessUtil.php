@@ -16,9 +16,9 @@ define('DEFAULT_URL', '/home');
 
 class PageAccessUtil
 {
-    protected $userModel;
-    protected $userSessionUtil;
-    protected $urlUtil;
+    private $userModel;
+    private $userSessionUtil;
+    private $urlUtil;
 
     public function __construct()
     {
@@ -39,14 +39,15 @@ class PageAccessUtil
 
     public function redirectToLoggedInPageByRank(string $userRank)
     {
+        $status = isset($_GET['status']) ? $_GET['status'] : LOGGED_IN_MESSAGE;
         if ($userRank == 'student') {
-            $this->urlUtil->goToUrlWithStatus(STUDENT_DEFAULT_URL, LOGGED_IN_MESSAGE);
+            $this->urlUtil->goToUrlWithStatus(STUDENT_DEFAULT_URL, $status);
         } elseif ($userRank == 'teacher') {
-            $this->urlUtil->goToUrlWithStatus(TEACHER_DEFAULT_URL, LOGGED_IN_MESSAGE);
+            $this->urlUtil->goToUrlWithStatus(TEACHER_DEFAULT_URL, $status);
         } elseif ($userRank == 'admin') {
-            $this->urlUtil->goToUrlWithStatus(ADMIN_DEFAULT_URL, LOGGED_IN_MESSAGE);
+            $this->urlUtil->goToUrlWithStatus(ADMIN_DEFAULT_URL, $status);
         } else {
-            $this->urlUtil->goToUrlWithStatus(DEFAULT_URL, LOGGED_IN_MESSAGE);
+            $this->urlUtil->goToUrlWithStatus(DEFAULT_URL, $status);
         }
     }
 
@@ -57,10 +58,12 @@ class PageAccessUtil
         }
     }
 
-    public function validateOrRedirectRank(string $targetRank)
+    public function validateOrRedirectRank(array $targetRanks)
     {
-        $userRank = $this->userModel->getUserRank();
-        if ($userRank !== $targetRank) {
+        $this->validateOrRedirectLoggedIn();
+        $userId = $this->userSessionUtil->getUserId();
+        $userRank = $this->userModel->findRankByUserId($userId);
+        if (!in_array($userRank, $targetRanks)) {
             $this->goToLoginPageWithStatus(INSUFFICIENT_PERMISSION_MESSAGE);
         }
     }

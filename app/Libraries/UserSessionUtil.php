@@ -28,14 +28,14 @@ class UserSessionUtil
             && $_SESSION['loggedin'] === true;
     }
 
-    public function getUserId()
+    public function getUserId(): ?int
     {
         if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION['userid'])) {
             return $_SESSION['userid'];
         }
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         if (session_status() === PHP_SESSION_ACTIVE && isset($_SESSION['username'])) {
             return $_SESSION['username'];

@@ -40,28 +40,28 @@ class Coursestudent extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function findByCourseId($course_id)
+    public function findByCourseId($courseId)
     {
-        return $this->select('student_id')->where('course_id', $course_id)->findAll();
+        return $this->select('student_id')->where('course_id', $courseId)->findAll();
     }
-    public function findByStudentId($student_id)
+    public function findByStudentId($studentId)
     {
         return $this->select('courses.course_id, courses.name, courses.code, users.name as teacher_name')
-            ->where('student_id', $student_id)
+            ->where('student_id', $studentId)
             ->join('courses', 'course_student.course_id=courses.course_id', 'left')
             ->join('users', 'users.id=courses.teacher_id', 'left')
             ->get()->getResult();
     }
-    public function findByCourseIdWithUserInfo($course_id)
+    public function findByCourseIdWithUserInfo($courseId)
     {
         return $this->db->table('course_student')
             ->select('users.id as student_id, name')
-            ->where('course_student.course_id', $course_id)
+            ->where('course_student.course_id', $courseId)
             ->join('users', 'users.id=course_student.student_id', 'left')
             ->get()->getResult();
     }
-    public function countByStudentId($student_id)
+    public function countByStudentId($studentId)
     {
-        return count($this->findByStudentId($student_id));
+        return count($this->findByStudentId($studentId));
     }
 }

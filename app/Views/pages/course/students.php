@@ -13,7 +13,7 @@
                 <tr>
                     <td><?php echo $student->id; ?></td>
                     <td><?php echo $student->name; ?></td>
-                    <td><a href="/course/student_attendance/<?php echo $data['course_id']; ?>/<?php echo $student->id; ?>"
+                    <td><a href="/course/student_attendance/<?php echo $data['courseId']; ?>/<?php echo $student->id; ?>"
                             class="btn btn-success"> View</a></td>
                 </tr>
                 <?php

@@ -14,17 +14,19 @@ class Course extends BaseController
         $this->lectureAttendanceModel = new \App\Models\LectureAttendance();
         $this->courseStudentModel = new \App\Models\Coursestudent();
     }
-    public function students($course_id)
+
+    public function students($courseId)
     {
-        $this->userSessionUtil->autoLogout();
+        $this->pageAccessUtil->validateOrRedirectLoggedIn();
         $students = $this->userModel->findByRank('student');
-        $this->template->teacher('course/students', ['students' => $students, 'course_id' => $course_id]);
+        $this->template->teacher('course/students', ['students' => $students, 'courseId' => $courseId]);
     }
-    public function student_attendance($course_id = null, $student_id = null)
+
+    public function student_attendance($courseId = null, $studentId = null)
     {
-        if ($course_id !== null && $student_id !== null) {
-            $student_records = $this->lectureAttendanceModel->findByCourseIdAndStudentId($course_id, $student_id);
+        if ($courseId !== null && $studentId !== null) {
+            $studentAttendances = $this->lectureAttendanceModel->findByCourseIdAndStudentId($courseId, $studentId);
         }
-        $this->template->teacher('course/student_attendance', ['student_records' => $student_records]);
+        $this->template->teacher('course/student_attendance', ['studentAttendances' => $studentAttendances]);
     }
 }

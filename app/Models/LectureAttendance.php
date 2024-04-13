@@ -40,32 +40,32 @@ class LectureAttendance extends Model
     protected $beforeDelete = [];
     protected $afterDelete = [];
 
-    public function findByLectureId($lecture_id)
+    public function findByLectureId($lectureId)
     {
-        return $this->where('lecture_id', $lecture_id)->findAll();
+        return $this->where('lecture_id', $lectureId)->findAll();
     }
-    public function existsByLectureIdAndStudentId($lecture_id, $student_id)
+    public function existsByLectureIdAndStudentId($lectureId, $studentId)
     {
-        $result = $this->where('lecture_id', $lecture_id)->where('student_id', $student_id)->findAll();
+        $result = $this->where('lecture_id', $lectureId)->where('student_id', $studentId)->findAll();
         return count($result) > 0;
     }
-    public function saveByLectureIdAndStudentId($lecture_id, $student_id)
+    public function saveByLectureIdAndStudentId($lectureId, $studentId)
     {
-        if ($this->existsByLectureIdAndStudentId($lecture_id, $student_id)) {
+        if ($this->existsByLectureIdAndStudentId($lectureId, $studentId)) {
             return 0;
         }
         $data = [
-            'lecture_id' => $lecture_id,
-            'student_id' => $student_id
+            'lecture_id' => $lectureId,
+            'student_id' => $studentId
         ];
         return $this->save($data);
     }
-    public function findByCourseIdAndStudentId($course_id, $student_id)
+    public function findByCourseIdAndStudentId($courseId, $studentId)
     {
         return $this->db->table('course_lecture')
             ->select('course_lecture.lecture_id, date, start_time, end_time, attendance_id')
-            ->where('course_lecture.course_id', $course_id)
-            ->where('lecture_attendance.student_id', $student_id)
+            ->where('course_lecture.course_id', $courseId)
+            ->where('lecture_attendance.student_id', $studentId)
             ->join('lecture_attendance', 'lecture_attendance.lecture_id=course_lecture.lecture_id', 'left')
             ->get()->getResult();
     }
